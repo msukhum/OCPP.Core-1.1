@@ -1,0 +1,185 @@
+﻿
+@model ChargeTagViewModel
+@{ ViewData["Title"] = "Management"; }
+
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">Edit RFID-Tag</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-md-12 card border-1 shadow-none rounded">
+                    @if (Model != null)
+                    {
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="TagId">RFID-Number</label>
+                                    </div>
+                                </div>
+                                @if (Model.CurrentTagId == "@")
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 50)" data-val-length-max="50" data-val-required="Required" id="TagId" maxlength="50" name="TagId" placeholder="ID / Number" value="@Model.TagId">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="TagId" data-valmsg-replace="true"></span>
+                                    </div> }
+                                else
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" readonly class="form-control" id="TagId" name="TagId" placeholder="ID / Number" value="@Model.TagId">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        &nbsp;
+                                    </div>}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="TagName">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 200)" data-val-length-max="200" data-val-required="Required" id="TagName" maxlength="200" name="TagName" placeholder="Display name" type="text" value="@Model.TagName" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="TagName" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="TagName">Group</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 50)" data-val-length-max="50" id="ParentTagId" maxlength="50" name="ParentTagId" placeholder="Member of group" type="text" value="@Model.ParentTagId" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="ParentTagId" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="expiryDatetimepicker">Expiration</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group date" id="expiryDatetimepicker" style="max-width: 180px">
+                                            <input type="text" class="form-control" id="ExpiryDate" name="ExpiryDate" value="@Model.ExpiryDate?.ToString(ViewBag.DatePattern)">
+                                            <span class="input-group-append"><i class="input-group-text fa fa-calendar" style="padding-top: 10px;"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="form-check-label inline-label" for="Blocked">Blocked</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        @Html.CheckBoxFor(m => m.Blocked, new { @class = "form-check-input checkbox-lg" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 text-danger">
+                                    @ViewBag.ErrorMsg
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                                <div class="col-sm-8" style="justify-content: flex-start;">
+                                    <button type="submit" class="btn btn-primary">@(Model.CurrentTagId == "@" ? "Create" : "Save")</button>
+                                </div>
+                            </div>}
+
+                        <script>
+            $(function () {
+                $('#expiryDatetimepicker').datepicker({
+                    weekStart: 1,
+                    todayBtn: true,
+                    language: "@ViewBag.Language",
+                    todayHighlight: true
+                });
+            });
+
+                        </script>
+}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

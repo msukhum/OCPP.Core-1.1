@@ -1,0 +1,144 @@
+﻿@using OCPP.Core.Database
+@using OCPP.Core.Server.Messages_OCPP16
+@model OCPPViewModel
+
+@{ ViewData["Title"] = "Management"; }
+<br />
+
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">UnlockConnector</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-header">JSON TEST</div>
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-6">
+                    <p>
+                        <strong>Charge point</strong> :
+                        <select id="chargepoint_sl" class="form-control">
+                            @foreach (ChargePoint cp in Model.ChargePoints.OrderBy(x => x.ChargePointId).ToList())
+                            {
+                <option value="@cp.ChargePointId">@(string.IsNullOrEmpty(cp.Name) ? cp.ChargePointId : cp.Name)</option>}
+                        </select>
+                    </p>
+                    <p>
+                        <strong>Connector</strong> :
+                        <select id="connector_sl" class="form-control">
+                        </select>
+                    </p>
+                    <p style="float: right;">
+                        <button id="genbn" type="button" class="btn btn-dark">Gen Json</button>
+                        <button id="testbn" type="button" class="btn btn-primary">Test</button>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p>
+                        <strong>Request</strong> :
+                        <textarea id="txtRequest" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-12">
+                    <p>
+                        <strong>Result</strong> :
+                        <textarea id="txtResult" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#chargepoint_sl').change(function () {
+        var value = $(this).val();
+        //console.log(value);
+        $.ajax({
+            url: "@Url.Action("GetConnectors", "OCPP")",
+            type: "POST",
+            data: { id: value },
+            success: function (response) {
+                //console.log("items:" + response);
+                var obj = jQuery.parseJSON(response);
+                $('#connector_sl').empty();
+                $.each(obj, function (i, item) {
+                    //console.log("item:"+item);
+                    $('#connector_sl').append($('<option>', { value: item.ConnectorId, text: (item.ConnectorId + ":" + item.ConnectorName)}));
+                });
+            }
+        });
+    }).change();
+
+    $('#genbn').click(function () {
+        var connectorid = $('#connector_sl').val();
+        $.ajax({
+            url: "@Url.Action("GetUnlockConnectorJson", "OCPP")",
+            type: "POST",
+            data: { connectorid: connectorid },
+            success: function (response) {
+                var url = "ChargePoint: " + $('#chargepoint_sl').val() + ", Connector: " + $('#connector_sl').val() + '\nUnlockConnectorRequest :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtRequest').val(pretty);
+            }
+        });
+    });
+
+    $('#testbn').click(function () {
+        var id = $('#chargepoint_sl').val();
+        var connectorid = $('#connector_sl').val();
+        $.ajax({
+            url: "@Url.Action("UnlockConnector2ChargePoint", "OCPP")",
+            type: "POST",
+            data: { id: id, connectorid: connectorid },
+            success: function (response) {
+                var url = 'UnlockConnectorResponse :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtResult').val(pretty);
+            }
+        });
+    });
+</script>

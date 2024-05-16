@@ -1,0 +1,1 @@
+[2,"Vj3ZeOxUT0blD6tvddAFRgur0xrbOGnOVCZ8","StatusNotification",{"connectorId":"2","status":"Finishing","errorCode":"NoError","info":"","timestamp":"2022-01-11T07:54:42Z","vendorId":"","vendorErrorCode":""}]

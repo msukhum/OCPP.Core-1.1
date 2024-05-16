@@ -1,0 +1,1 @@
+[2,"4PzTN3D431714gTgP8mqWBkcsp00iX7S75oR","StartTransaction",{"connectorId":"1","idTag":"B4A63CDF","timestamp":"2022-01-19T16:31:42Z","meterStart":0,"reservationId":0}]

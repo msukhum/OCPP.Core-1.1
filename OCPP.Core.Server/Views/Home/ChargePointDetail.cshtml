@@ -1,0 +1,307 @@
+﻿@model ChargePointViewModel
+
+@{ ViewData["Title"] = "Management"; }
+
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">Edit charge point</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-md-12 card border-1 shadow-none rounded">
+                    @if (Model != null)
+                    {
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="ChargePointId">ID</label>
+                                    </div>
+                                </div>
+                                @if (Model.CurrentId == "@")
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 100)" data-val-length-max="100" data-val-required="Required" id="ChargePointId" maxlength="100" name="ChargePointId" placeholder="Charge point ID" value="@Model.ChargePointId">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ChargePointId" data-valmsg-replace="true"></span>
+                                    </div> }
+                                else
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" readonly class="form-control" id="ChargePointId" name="ChargePointId" placeholder="Charge point ID" value="@Model.ChargePointId">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        &nbsp;
+                                    </div>}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="Name">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 100)" data-val-length-max="100" data-val-required="Required" id="Name" maxlength="100" name="Name" placeholder="Charge point name" type="text" value="@Model.Name" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="Comment">Comment</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 200)" data-val-length-max="200" id="Comment" maxlength="200" name="Comment" placeholder="Charge point comment" type="text" value="@Model.Comment" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Comment" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="Username">Username</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 50)" data-val-length-max="50" id="Username" maxlength="50" name="Username" placeholder="Charge point username" type="text" value="@Model.Username" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="Password">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 50)" data-val-length-max="50" id="Password" maxlength="50" name="Password" placeholder="Charge point password" type="text" value="@Model.Password" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="ClientCertThumb">ClientCertThumb</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 100)" data-val-length-max="100" id="ClientCertThumb" maxlength="100" name="ClientCertThumb" placeholder="Client-Certificate (Thumbprint)" type="text" value="@Model.ClientCertThumb" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="ClientCertThumb" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 text-danger">
+                                    @ViewBag.ErrorMsg
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                                <div class="col-sm-8" style="justify-content: flex-start;">
+                                    <button type="submit" class="btn btn-primary">@(Model.CurrentId == "@" ? "Create" : "Save")</button>
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(Model.ChargePointId))
+                            {
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <button type="button" class="btn btn-info" id="btnReset" title="Reset" onclick="ResetChargepoint()"><i class="fas fa-redo"></i> Reset</button>
+                                        <button type="button" class="btn btn-info" id="btnUnlock" title="UnlockConnector" onclick="UnlockConnector()"><i class="fas fa-lock-open"></i> UnlockConnector</button>
+                                    </div>
+                                </div>}}
+
+
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ChargePointId))
+                        {
+                            <script>
+            function ResetChargepoint() {
+                var dialog = new BootstrapDialog({
+                    title: 'Reset',
+                    message: '@(string.Format("Should the charging station '{0}' really be restarted?", Model.Name))',
+                    spinicon: 'fa fa-spinner fa-fw',
+                    buttons: [{
+                        id: 'btnDialogReset',
+                        label: 'Reset',
+                        icon: 'fas fa-redo',
+                        autospin: true,
+                        action: function (dialogRef) {
+                            dialogRef.enableButtons(false);
+                            dialogRef.setClosable(false);
+                            dialogRef.getModalBody().html('Restart of the charging station is triggered...');
+
+                            var xmlhttp = new XMLHttpRequest();
+                            xmlhttp.onreadystatechange = function () {
+                                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                                    if (xmlhttp.status == 200) {
+                                        dialogRef.getModalBody().html(xmlhttp.responseText);
+                                    }
+                                    else {
+                                        dialogRef.getModalBody().html('An error occured.');
+                                    }
+
+                                    dialogRef.setClosable(true);
+                                    dialogRef.enableButtons(true);
+                                    var $resetButton = dialog.getButton('btnDialogReset');
+                                    $resetButton.hide();
+                                    var $cancelButton = dialog.getButton('btnDialogCancel');
+                                    $cancelButton.text('Close');
+
+                                }
+                            };
+                            xmlhttp.open("GET", "@Html.Raw(Url.Content("~/APPAPI/Reset/" + Uri.EscapeUriString(Model.ChargePointId)))", true);
+                            xmlhttp.send();
+                        }
+                    }, {
+                        id: 'btnDialogCancel',
+                        label: 'Cancel',
+                        action: function (dialogRef) {
+                            dialogRef.close();
+                        }
+                    }]
+                });
+                dialog.open();
+            }
+
+            function UnlockConnector() {
+                var dialog = new BootstrapDialog({
+                    title: 'UnlockConnector',
+                    message: '@(string.Format("Should the charging station '{0}' really be unlocked?", Model.Name))',
+                    spinicon: 'fa fa-spinner fa-fw',
+                    buttons: [{
+                        id: 'btnUnlock',
+                        label: 'UnlockConnector',
+                        icon: 'fas fa-lock-open',
+                        autospin: true,
+                        action: function (dialogRef) {
+                            dialogRef.enableButtons(false);
+                            dialogRef.setClosable(false);
+                            dialogRef.getModalBody().html('Unlock of the charging station is triggered...');
+
+                            var xmlhttp = new XMLHttpRequest();
+                            xmlhttp.onreadystatechange = function () {
+                                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                                    if (xmlhttp.status == 200) {
+                                        dialogRef.getModalBody().html(xmlhttp.responseText);
+                                    }
+                                    else {
+                                        dialogRef.getModalBody().html('An error occured.');
+                                    }
+
+                                    dialogRef.setClosable(true);
+                                    dialogRef.enableButtons(true);
+                                    var $resetButton = dialog.getButton('btnUnlock');
+                                    $resetButton.hide();
+                                    var $cancelButton = dialog.getButton('btnDialogCancel');
+                                    $cancelButton.text('Close');
+
+                                }
+                            };
+                            xmlhttp.open("GET", "@Html.Raw(Url.Content("~/APPAPI/UnlockConnector/" + Uri.EscapeUriString(Model.ChargePointId)))", true);
+                            xmlhttp.send();
+                        }
+                    }, {
+                        id: 'btnDialogCancel',
+                        label: 'Cancel',
+                        action: function (dialogRef) {
+                            dialogRef.close();
+                        }
+                    }]
+                });
+                dialog.open();
+    }
+
+                            </script>
+                        }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

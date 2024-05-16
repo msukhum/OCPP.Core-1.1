@@ -1,0 +1,1 @@
+[2,"b6365e967457483a92eba8e634f8b790","MeterValues",{"connectorId":"2","transactionId":"69","meterValue":[{"timestamp":"2022-02-02T05:14:43Z","sampledValue":[{"value":"200","measurand":"Energy.Active.Import.Register"},{"value":800,"measurand":"Power.Active.Import"},{"value":47,"measurand":"SoC"}]}]}]

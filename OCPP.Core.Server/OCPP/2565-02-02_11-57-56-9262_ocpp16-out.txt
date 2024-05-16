@@ -1,0 +1,1 @@
+[3,"oC1J1svMFh3jMtqBCkqBYB2JUTlRnqUIWaY9",{"idTagInfo":{"expiryDate":"2199-12-31T00:00:00+07:00","status":"Accepted"},"transactionId":66}]

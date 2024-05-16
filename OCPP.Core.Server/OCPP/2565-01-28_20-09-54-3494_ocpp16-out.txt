@@ -1,0 +1,1 @@
+[2,"e52970655cb64f44a6ab1754cdf04ec9","GetConfiguration",{"key":["BlinkRepeat","ChargeProfileMaxStackLevel"]}]

@@ -1,0 +1,188 @@
+﻿
+@model ConnectorStatusViewModel
+
+@{
+    ViewData["Title"] = "Management";
+}
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">Edit Connector</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-md-12 card border-1 shadow-none rounded">
+                @if (Model != null)
+                {
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="ChargePointIdRO">ChargePoint ID</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="ChargePointIdRO" name="ChargePointIdRO" value="@Model.ChargePointId">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                        &nbsp;
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="ConnectorIdRO">Connector ID</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="ConnectorIdRO" name="ConnectorIdRO" value="@Model.ConnectorId">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="ConnectorName">Connector Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" data-val="true" data-val-length="@string.Format("Max. {0} characters", 200)" data-val-length-max="200" id="ConnectorName" maxlength="200" name="ConnectorName" placeholder="Connector Name" type="text" value="@Model.ConnectorName" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="ConnectorName" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="LastStatusRO">LastStatus</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="LastStatusRO" name="LastStatusRO" value="@Model.LastStatus">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="LastStatusTimeRO">LastStatusTime</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="LastStatusTimeRO" name="LastStatusTimeRO" value="@((Model.LastStatusTime.HasValue) ? string.Format("{0:G}", Model.LastStatusTime.Value) : "-")">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="LastMeterRO">LastMeter</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="LastMeterRO" name="LastMeterRO" value="@((Model.LastMeter.HasValue) ? string.Format("{0:0.0## kWh}", Model.LastMeter.Value) : "-" )">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2 align-self-center">
+                                    <div class="form-group">
+                                        <label class="inline-label" for="LastMeterTimeRO">LastMeterTime</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control" id="LastMeterTimeRO" name="LastMeterTimeRO" value="@((Model.LastMeterTime.HasValue) ? string.Format("{0:G}", Model.LastMeterTime.Value) : "-")">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-10 text-danger">
+                                    @ViewBag.ErrorMsg
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    &nbsp;
+                                </div>
+                                <div class="col-sm-8">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                    }
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

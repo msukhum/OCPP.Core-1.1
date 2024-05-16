@@ -1,0 +1,1 @@
+[3,"bupqXC8c0uYSl94MyEgIVSQ1IhAH4zp2NDtF",{"status":"Accepted","currentTime":"2022-01-12T10:32:34.4127863+00:00","interval":300}]

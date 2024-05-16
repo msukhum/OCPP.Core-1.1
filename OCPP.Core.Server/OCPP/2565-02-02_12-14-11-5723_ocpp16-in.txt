@@ -1,0 +1,1 @@
+[2,"b6365e967457483a92eba8e634f8b790","StatusNotification",{"connectorId":"2","status":"Charging","errorCode":"NoError","info":"","timestamp":"2022-02-02T05:14:11Z","vendorId":"","vendorErrorCode":""}]

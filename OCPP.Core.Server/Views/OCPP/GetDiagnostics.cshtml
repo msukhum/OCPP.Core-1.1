@@ -1,0 +1,150 @@
+﻿@using OCPP.Core.Database
+@using OCPP.Core.Server.Messages_OCPP16
+@model OCPPViewModel
+
+@{ ViewData["Title"] = "Management"; }
+<br />
+
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">GetDiagnostics</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-header">JSON TEST</div>
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-6">
+                    <p>
+                        <strong>Charge point</strong> :
+                        <select id="chargepoint_sl" class="form-control">
+                            @foreach (ChargePoint cp in Model.ChargePoints.OrderBy(x => x.ChargePointId).ToList())
+                            {
+                <option value="@cp.ChargePointId">@(string.IsNullOrEmpty(cp.Name) ? cp.ChargePointId : cp.Name)</option>}
+                        </select>
+                    </p>
+                    <p>
+                        <strong>Location</strong> :
+                        <input id="textlocation" class="form-control" placeholder="Directory where the diagnostics file shall be uploaded to." />
+                    </p>
+                    <p>
+                        <strong>Retries</strong> :
+                        <input id="textretries" type="number" class="form-control" />
+                    </p>
+                    <p>
+                        <strong>Retry Interval</strong> :
+                        <input id="textretryinterval" type="number" class="form-control" />
+                    </p>
+                    <p>
+                        <strong>StartTime</strong> :
+                        <input id="textstartTime" type="date" class="form-control" />
+                    </p>
+                    <p>
+                        <strong>StopTime</strong> :
+                        <input id="textstopTime" type="date" class="form-control" />
+                    </p>
+                    <p style="float: right;">
+                        <button id="genbn" type="button" class="btn btn-dark">Gen Json</button>
+                        <button id="testbn" type="button" class="btn btn-primary">Test</button>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p>
+                        <strong>Request</strong> :
+                        <textarea id="txtRequest" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-12">
+                    <p>
+                        <strong>Result</strong> :
+                        <textarea id="txtResult" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+    });
+    $('#genbn').click(function () {
+        var location = $('#textlocation').val();
+        var retries = $('#textretries').val();
+        var startTime  $('#textstartTime').val();
+        var stopTime  $('#textstopTime').val();
+        var retryInterval = $('#textretryinterval').val();
+        $.ajax({
+            url: "@Url.Action("GetDiagnosticsJson", "OCPP")",
+            type: "POST",
+            data: { location: location, retries: retries, retryInterval: retryInterval, startTime: startTime, stopTime: stopTime},
+            success: function (response) {
+                var url = "ChargePoint: " + $('#chargepoint_sl').val() + ", Location: " + location + '\nGetDiagnosticsRequest :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtRequest').val(pretty);
+            }
+        });
+    });
+
+    $('#testbn').click(function () {
+        var id = $('#chargepoint_sl').val();
+        var location = $('#textlocation').val();
+        var retries = $('#textretries').val();
+        var retryInterval = $('#textretryinterval').val();
+        var startTime  $('#textstartTime').val();
+        var stopTime  $('#textstopTime').val();
+        $.ajax({
+            url: "@Url.Action("GetDiagnostics2ChargePoint", "OCPP")",
+            type: "POST",
+            data: { id: id, location: location, retries: retries, retryInterval: retryInterval, startTime: startTime, stopTime: stopTime },
+            success: function (response) {
+                var url = 'GetDiagnosticsResponse :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtResult').val(pretty);
+            }
+        });
+    });
+</script>

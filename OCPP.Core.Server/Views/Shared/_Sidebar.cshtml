@@ -1,0 +1,43 @@
+﻿
+
+<div class="slimscroll-menu" id="remove-scroll">
+
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu" id="side-menu">
+            <li><a href="@Url.Action("Index", "Home")" class="waves-effect"><i class="dripicons-home"></i><span> Dashboard </span></a></li>
+            <li><a href="@Url.Action("ChargeTag", "Home")" class="waves-effect"><i class="dripicons-device-tablet"></i><span> RFID-Tags </span></a></li>
+            <li><a href="@Url.Action("ChargePoint", "Home")" class="waves-effect"><i class="fas fa-charging-station"></i><span> Charge points </span></a></li>
+            <li><a href="@Url.Action("Connector", "Home")" class="waves-effect"><i class="fas fa-plug"></i><span> Connectors </span></a></li>
+
+            <li class="menu-title">OCPP Protocol</li>
+
+            <li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-briefcase"></i> <span> Protocol Test <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span> </a>
+                <ul class="submenu">
+                    <li><a href="@Url.Action("CancelReservation", "OCPP")">CancelReservation</a></li>
+                    <li><a href="@Url.Action("ChangeAvailability", "OCPP")">ChangeAvailability</a></li>
+                    <li><a href="@Url.Action("ChangeConfiguration", "OCPP")">ChangeConfiguration</a></li>
+                    <li><a href="@Url.Action("ClearCache", "OCPP")">ClearCache</a></li>
+                    <li><a href="@Url.Action("ClearChargingProfile", "OCPP")">ClearChargingProfile</a></li>
+                    <li><a href="@Url.Action("GetCompositeSchedule", "OCPP")">GetCompositeSchedule</a></li>
+                    <li><a href="@Url.Action("GetConfiguration", "OCPP")">GetConfiguration</a></li>
+                    <li><a href="@Url.Action("GetDiagnostics", "OCPP")">GetDiagnostics</a></li>
+                    <li><a href="@Url.Action("GetLocalListVersion", "OCPP")">GetLocalListVersion</a></li>
+                    <li><a href="@Url.Action("RemoteStartTransaction", "OCPP")">RemoteStartTransaction</a></li>
+                    <li><a href="@Url.Action("RemoteStopTransaction", "OCPP")">RemoteStopTransaction</a></li>
+                    <li><a href="@Url.Action("ReserveNow", "OCPP")">ReserveNow</a></li>
+                    <li><a href="@Url.Action("Reset", "OCPP")">Reset</a></li>
+                    <li><a href="@Url.Action("SendLocalList", "OCPP")">SendLocalList</a></li>
+                    <li><a href="@Url.Action("SetChargingProfile", "OCPP")">SetChargingProfile</a></li>
+                    <li><a href="@Url.Action("UnlockConnector", "OCPP")">UnlockConnector</a></li>
+                    <li><a href="@Url.Action("UpdateFirmware", "OCPP")">UpdateFirmware</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <!-- Sidebar -->
+</div>
+<!-- Sidebar -left -->

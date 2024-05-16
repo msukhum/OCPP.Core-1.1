@@ -1,0 +1,35 @@
+﻿.table tr {
+    cursor: pointer;
+}
+
+.successColor {
+    background-color: #90EE90;
+}
+
+.errorColor {
+    background-color: #FFB6C1;
+}
+
+.unavailableColor {
+    background-color: #B0B0B0;
+}
+
+.successTextColor {
+    color: seagreen;
+}
+
+.errorTextColor {
+    color: orangered;
+}
+
+.headerCardColor {
+    color: black;
+}
+
+.preparingTextColor {
+    color: #FFB2A1;
+}
+
+.preparingColor {
+    background-color: #FFB2A1;
+}

@@ -1,0 +1,1 @@
+[2,"33164bc352e64dd9a1efdc75272bd64d","StopTransaction",{"transactionId":"66","idTag":"B4A63CDF","timestamp":"2022-02-02T05:04:40Z","meterStop":20}]

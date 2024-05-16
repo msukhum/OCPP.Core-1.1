@@ -1,0 +1,1 @@
+[2,"iWQMqz2OV66QSU53Uun9Yei8W08UgGWKAqaI","StatusNotification",{"connectorId":"2","status":"Charging","errorCode":"NoError","info":"","timestamp":"2022-02-01T08:43:18Z","vendorId":"","vendorErrorCode":""}]

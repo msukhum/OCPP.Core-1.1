@@ -1,0 +1,1 @@
+[3,"4PzTN3D431714gTgP8mqWBkcsp00iX7S75oR",{"idTagInfo":{"expiryDate":"2022-01-19T16:36:29.9458638+00:00","status":"Accepted"}}]

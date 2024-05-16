@@ -1,0 +1,144 @@
+﻿@using OCPP.Core.Server.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="@Constants.RefreshTime">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>EVCharger Dashboard</title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App Icons -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+
+    <!--Morris Chart CSS -->
+    <!--<link rel="stylesheet" href="../plugins/morris/morris.css">-->
+    <!-- Basic Css files -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/metismenu.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap-dialog/bootstrap-dialog.min.css" />
+    <link href="~/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="~/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/css/site.css" rel="stylesheet" type="text/css">
+    <link href="~/css/fontawesome.css" rel="stylesheet" type="text/css">
+    <!-- jQuery  -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modernizr.min.js"></script>
+    <script src="~/js/metisMenu.min.js"></script>
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <script src="~/js/waves.js"></script>
+    <script src="~/lib/bootstrap-dialog/bootstrap-dialog.min.js"></script>
+    <!--<script src="../plugins/peity-chart/jquery.peity.min.js"></script>-->
+    <!--Morris Chart-->
+    <!--<script src="../plugins/morris/morris.min.js"></script>
+    <script src="../plugins/raphael/raphael-min.js"></script>-->
+    @*<script src="~/pages/dashboard.js"></script>*@
+
+    <!-- App js -->
+    @*<script src="~/js/app.js"></script>*@
+</head>
+<body class="fixed-left">
+
+    <!-- Loader -->
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+    <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            @Html.Partial("_TopNavbar")
+        </div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu">
+            @Html.Partial("_Sidebar")
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <!-- Start container-fluid -->
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+                <!-- End container-fluid -->
+            </div>
+            <!-- End content -->
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                &copy; 2022 - EVCharger <span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Desnarong.</span>
+            </footer>
+        </div>
+    </div>
+    <!-- END wrapper -->
+    
+
+<script>
+        $(document).ready(function () {
+            $('.slimscroll-menu').slimscroll({
+                height: 'auto',
+                position: 'right',
+                size: "5px",
+                color: '#9ea5ab',
+                wheelStep: 5,
+                touchScrollStep: 50
+            });
+
+            $('.slimscroll-noti').slimscroll({
+                height: '208px',
+                position: 'right',
+                size: "5px",
+                color: '#98a6ad',
+                wheelStep: 10
+            });
+
+            $("#side-menu").metisMenu();
+
+            if ($(window).width() < 1025) {
+                $('body').addClass('enlarged');
+            } else {
+                $('body').removeClass('enlarged');
+            }
+
+            $("#sidebar-menu a").each(function () {
+                var pageUrl = window.location.href.split(/[?#]/)[0];
+                if (this.href == pageUrl) {
+                    $(this).addClass("active");
+                    $(this).parent().addClass("active"); // add active to li of the current link
+                    $(this).parent().parent().addClass("in");
+                    $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
+                    $(this).parent().parent().parent().addClass("active");
+                    $(this).parent().parent().parent().parent().addClass("in"); // add active to li of the current link
+                    $(this).parent().parent().parent().parent().parent().addClass("active");
+                }
+            });
+
+            $('#status').fadeOut();
+            $('#preloader').delay(10).fadeOut('slow');
+            $('body').delay(10).css({
+                'overflow': 'visible'
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+
+            $('.toggle-search').on('click', function () {
+                var targetId = $(this).data('target');
+                var $searchBar;
+                if (targetId) {
+                    $searchBar = $(targetId);
+                    $searchBar.toggleClass('open');
+                }
+            });
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+[2,"dQrnjsdqI5QFFOnds27CvXq9y5QkfIYDpVAv","StatusNotification",{"connectorId":"2","status":"Available","errorCode":"NoError","info":"","timestamp":"2022-02-02T04:53:17Z","vendorId":"","vendorErrorCode":""}]

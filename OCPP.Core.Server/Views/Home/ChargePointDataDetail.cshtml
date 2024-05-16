@@ -1,0 +1,423 @@
+﻿@using OCPP.Core.Database
+@model TransactionListViewModel
+
+@{ ViewData["Title"] = "Charge Point Data"; }
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<br />
+@{ List<ConnectorStatusViewModel> connectorStatusViewModels = new List<ConnectorStatusViewModel>();
+
+    // Copy CP-Names in dictionary for name resolution and
+    Dictionary<string, string> chargePointNames = new Dictionary<string, string>();
+    if (Model.ChargePoints != null)
+    {
+        foreach (ChargePoint cp in Model.ChargePoints)
+        {
+            chargePointNames.Add(cp.ChargePointId, cp.Name);
+        }
+    }
+
+
+    // Count connectors for every charge point (=> naming scheme)
+    Dictionary<string, int> dictConnectorCount = new Dictionary<string, int>();
+    string currentConnectorName = string.Empty;
+    string ChargePointId = string.Empty;
+    string ConnectorId = string.Empty;
+    bool heartbeat = false;
+    string heartbeatlastDate = "";
+    string cpColor = "successTextColor";
+    string lastStatus = "";
+
+    foreach (ConnectorStatus cs in Model.ConnectorStatuses)
+    {
+        if (dictConnectorCount.ContainsKey(cs.ChargePointId))
+        {
+            // > 1 connector
+            dictConnectorCount[cs.ChargePointId] = dictConnectorCount[cs.ChargePointId] + 1;
+        }
+        else
+        {
+            // first connector
+            dictConnectorCount.Add(cs.ChargePointId, 1);
+        }
+
+        ConnectorStatusViewModel csvm = new ConnectorStatusViewModel();
+        csvm.ChargePointId = cs.ChargePointId;
+        csvm.ConnectorId = cs.ConnectorId;
+
+        string connectorName = cs.ChargePointId;
+        //if (string.IsNullOrEmpty(connectorName))
+        //{
+        //    // Default: use charge point name
+        //    chargePointNames.TryGetValue(cs.ChargePointId, out connectorName);
+        //    if (string.IsNullOrEmpty(connectorName))
+        //    {
+        //        // Fallback: use charge point ID
+        //        connectorName = cs.ChargePointId;
+        //    }
+        //    connectorName = $"{connectorName}";
+        //}
+        csvm.ConnectorName = connectorName;
+        connectorStatusViewModels.Add(csvm);
+
+        if (cs.ChargePointId == Model.CurrentChargePointId)
+        {
+            var now = DateTime.Now;
+            currentConnectorName = connectorName;
+            ChargePointId = cs.ChargePointId;
+            var lastDate = Model.MessageLogs.Max(p => p.LogTime);
+            heartbeat = (now - lastDate).TotalSeconds > Model.HeartbeatTimeout ? false : true;
+            heartbeatlastDate = lastDate.ToString("yyyy-MM-dd HH:mm:ss", new System.Globalization.CultureInfo("en-US"));
+            lastStatus = cs.LastStatus;
+            if (cs.LastStatus != "Available")
+            {
+                cpColor = "errorTextColor";
+            }
+        }
+    } }
+@if (Model != null)
+{
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-10">
+                            <h4 class="page-title mb-0">Charge point Detail</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end row -->
+        <div class="row align-items-center">
+            <div class="col-md-10 card border-1 shadow-none rounded">
+                <div class="card-header">Charge point: @currentConnectorName</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @if (heartbeat)
+                            {
+                                <i class="fa fa-circle" style="color:green" aria-hidden="true"></i> }
+                            else
+                            {
+                                <i class="fa fa-circle" style="color:red" aria-hidden="true"></i>}
+                            <span class="font-weight-bold">Last heart beat</span>@heartbeatlastDate
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 font-weight-bold"> Manage <button type="button" class="btn btn-primary" onclick="ResetChargepoint()"> Restart </button></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center pb-2 m-2 shadow-sm rounded font-weight-bold" style="color:black;">
+                        <div class="col-lg-2">Connector ID</div>
+                        <div class="col-lg-2">Connector Name</div>
+                        <div class="col-lg-2">Status</div>
+                        <div class="col-lg-1">@("Meter")</div>
+                        <div class="col-lg-1">@("Charge")</div>
+                        <div class="col-lg-1">@("SoC")</div>
+                        <div class="col-lg-3">Action</div>
+                    </div>
+                    @foreach (ConnectorStatus cs in Model.ConnectorStatuses.Where(x => x.ChargePointId == Model.CurrentChargePointId))
+                    {
+                        <div class="row text-secondary text-center p-2 m-2 shadow-lg rounded">
+                            <div class="col-lg-2" style="margin: auto;">@cs.ConnectorId</div>
+                            <div class="col-lg-2" style="margin: auto;">@cs.ConnectorName</div>
+                            @if (cs.LastStatus != "Available")
+                            {
+                                cpColor = "errorTextColor";}
+                            else
+                            {
+                                cpColor = "successTextColor";}
+                            <div class="col-lg-2 @cpColor" style="margin: auto;">@cs.LastStatus  </div>
+                            <div class="col-lg-1" style="margin: auto;">@(cs.LastMeter.HasValue ? (cs.LastMeter * 1000) + " Wh" : "")</div>
+                            <div class="col-lg-1" style="margin: auto;">@(cs.CurrentChargeKW.HasValue? cs.CurrentChargeKW.Value.ToString("N4") + " KW" : "")</div>
+                            <div class="col-lg-1" style="margin: auto;">@(cs.StateOfCharge.HasValue ? (cs.StateOfCharge + " %") : "")</div>
+                            <div class="col-lg-3" style="margin: auto;"><button type="button" class="btn btn-font-weight-bold successTextColor" onclick="RemoteStartTransaction('@cs.ChargePointId', '@cs.ConnectorId')">START</button> | <button type="button" class="btn btn-font-weight-bold errorTextColor" onclick="RemoteStopTransaction('@cs.ChargePointId', '@cs.ConnectorId');">STOP</button></div>
+                        </div>}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 font-weight-bold"> OCPP Message Monitor: </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="15%">State/Type</th>
+                                <th width="15%"> Message </th>
+                                <th width="70%"> Type </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mgs in Model.MessageLogs.Take(20).ToList())
+                            {
+                            <tr>
+                                <td>@(mgs.LogState + " => " + mgs.LogType)</td>
+                                <td>@mgs.Message</td>
+                                <td>@("{\"currentTime\" : \"" + mgs.LogTime.ToString("yyyy-MM-dd HH:mm:ss", new System.Globalization.CultureInfo("en-US")) + "\", \"message\" : \"" + mgs.Result + "\"}")</td>
+                            </tr>}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- end row -->}}
+
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center text-center" role="document">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#loadingModal').modal('hide');
+    });
+    function ResetChargepoint() {
+        var dialog = new BootstrapDialog({
+        title: 'Restart',
+        message: '@string.Format("Should the charging station '{0}' really be restarted?", ChargePointId)',
+        spinicon: 'fa fa-spinner fa-fw',
+        buttons: [{
+                            id: 'btnDialogReset',
+                            label: 'Restart',
+                            icon: 'fas fa-redo',
+                            autospin: true,
+                            action: function (dialogRef) {
+                                dialogRef.enableButtons(false);
+                                dialogRef.setClosable(false);
+                                dialogRef.getModalBody().html('Restart of the charging station is triggered...');
+
+                                var xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange = function () {
+                                    if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                                        if (xmlhttp.status == 200) {
+                                            dialogRef.getModalBody().html(xmlhttp.responseText);
+                                        }
+                                        else {
+                                            dialogRef.getModalBody().html('Restart of the charging station is triggered...');
+                                        }
+
+                                        dialogRef.setClosable(true);
+                                        dialogRef.enableButtons(true);
+                                        var $resetButton = dialog.getButton('btnDialogReset');
+                                        $resetButton.hide();
+                                        var $cancelButton = dialog.getButton('btnDialogCancel');
+                                        $cancelButton.text('Close');
+
+                                    }
+                                };
+                                xmlhttp.open("GET", "@Html.Raw(Url.Content("~/APPAPI/Reset/" + Uri.EscapeUriString(ChargePointId)))", true);
+                                xmlhttp.send();
+                            }
+                        }, {
+                            id: 'btnDialogCancel',
+                            label: 'Cancel',
+                            action: function (dialogRef) {
+                                dialogRef.close();
+                                window.location.href = window.location.href; //This is a possibility
+                                window.location.reload(); //Another possiblity
+                                history.go(0); //And another
+                            }
+                        }]
+                    });
+                    dialog.open();
+                }
+
+            function RemoteStartTransaction(chargePointId, connectorId) {
+                $('#loadingModal').modal('show');
+                const xmlhttp = new XMLHttpRequest()
+                xmlhttp.open('GET', '/APPAPI/RemoteStartTransaction/' + chargePointId + '/' + connectorId)
+                xmlhttp.setRequestHeader('Content-type', 'application/json')
+
+                //http.send() // Make sure to stringify
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                        $('#loadingModal').modal('hide');
+                        //if (xmlhttp.status == 200) {
+                        //    console.log(xmlhttp.responseText);
+                        //    dialogRef.getModalBody().html(xmlhttp.responseText);
+                        //}
+                        //else {
+                        //    dialogRef.getModalBody().html('An error occured.');
+                        //}
+
+                        //dialogRef.setClosable(true);
+                        //dialogRef.enableButtons(true);
+                        //var $resetButton = dialog.getButton('btnStart');
+                        //$resetButton.hide();
+                        //var $cancelButton = dialog.getButton('btnDialogCancel');
+                        //$cancelButton.text('Close');
+
+                    }
+                };
+
+                xmlhttp.send() // Make sure to stringify
+                    //var dialog = new BootstrapDialog({
+                    //    title: 'Start',
+                    //    message: 'Should the charging station really be Start?',
+                    //    spinicon: 'fa fa-spinner fa-fw',
+                    //    buttons: [{
+                    //        id: 'btnStart',
+                    //        label: 'Start',
+                    //        autospin: true,
+                    //        cssClass: 'btn btn-danger',
+                    //        action: function (dialogRef) {
+                    //            dialogRef.enableButtons(false);
+                    //            dialogRef.setClosable(false);
+                    //            dialogRef.getModalBody().html('Start of the charging station is triggered...');
+
+                    //            const xmlhttp = new XMLHttpRequest()
+                    //            xmlhttp.open('GET', '/APPAPI/RemoteStartTransaction/' + chargePointId + '/' + connectorId)
+                    //            xmlhttp.setRequestHeader('Content-type', 'application/json')
+
+                    //            //http.send() // Make sure to stringify
+                    //            xmlhttp.onreadystatechange = function () {
+                    //                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                    //                    if (xmlhttp.status == 200) {
+                    //                        console.log(xmlhttp.responseText);
+                    //                        dialogRef.getModalBody().html(xmlhttp.responseText);
+                    //                    }
+                    //                    else {
+                    //                        dialogRef.getModalBody().html('An error occured.');
+                    //                    }
+
+                    //                    dialogRef.setClosable(true);
+                    //                    dialogRef.enableButtons(true);
+                    //                    var $resetButton = dialog.getButton('btnStart');
+                    //                    $resetButton.hide();
+                    //                    var $cancelButton = dialog.getButton('btnDialogCancel');
+                    //                    $cancelButton.text('Close');
+
+                    //                }
+                    //            };
+
+                    //            xmlhttp.send() // Make sure to stringify
+                    //                    }
+                    //                }, {
+                    //        id: 'btnDialogCancel',
+                    //        label: 'Cancel',
+                    //        action: function (dialogRef) {
+                    //            dialogRef.close();
+                    //            window.location.href = window.location.href; //This is a possibility
+                    //            window.location.reload(); //Another possiblity
+                    //            history.go(0); //And another
+                    //                }
+                    //            }]
+                    //});
+                    //            dialog.open();
+            }
+
+    function RemoteStopTransaction(chargePointId, connectorId) {
+        $('#loadingModal').modal('show');
+        const xmlhttp = new XMLHttpRequest()
+        xmlhttp.open('GET', '/APPAPI/RemoteStopTransaction/' + chargePointId + '/' + connectorId)
+        xmlhttp.setRequestHeader('Content-type', 'application/json')
+
+        //http.send() // Make sure to stringify
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                $('#loadingModal').modal('hide');
+                //if (xmlhttp.status == 200) {
+                //    console.log(xmlhttp.responseText);
+                //    dialogRef.getModalBody().html(xmlhttp.responseText);
+                //}
+                //else {
+                //    dialogRef.getModalBody().html('An error occured.');
+                //}
+
+                //dialogRef.setClosable(true);
+                //dialogRef.enableButtons(true);
+                //var $resetButton = dialog.getButton('btnStop');
+                //$resetButton.hide();
+                //var $cancelButton = dialog.getButton('btnDialogCancel');
+                //$cancelButton.text('Close');
+
+            }
+        };
+
+        xmlhttp.send() // Make sure to stringify
+                    //var dialog = new BootstrapDialog({
+                    //    title: 'Stop',
+                    //    message: 'Should the charging station really be stop?',
+                    //    spinicon: 'fa fa-spinner fa-fw',
+                    //    buttons: [{
+                    //        id: 'btnStop',
+                    //        label: 'Stop',
+                    //        autospin: true,
+                    //        cssClass: 'btn btn-danger',
+                    //        action: function (dialogRef) {
+                    //            dialogRef.enableButtons(false);
+                    //            dialogRef.setClosable(false);
+                    //            dialogRef.getModalBody().html('Start of the charging station is triggered...');
+
+                    //            const xmlhttp = new XMLHttpRequest()
+                    //            xmlhttp.open('GET', '/APPAPI/RemoteStopTransaction/' + chargePointId + '/' + connectorId)
+                    //            xmlhttp.setRequestHeader('Content-type', 'application/json')
+
+                    //            //http.send() // Make sure to stringify
+                    //            xmlhttp.onreadystatechange = function () {
+                    //                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                    //                    if (xmlhttp.status == 200) {
+                    //                        console.log(xmlhttp.responseText);
+                    //                        dialogRef.getModalBody().html(xmlhttp.responseText);
+                    //                    }
+                    //                    else {
+                    //                        dialogRef.getModalBody().html('An error occured.');
+                    //                    }
+
+                    //                    dialogRef.setClosable(true);
+                    //                    dialogRef.enableButtons(true);
+                    //                    var $resetButton = dialog.getButton('btnStop');
+                    //                    $resetButton.hide();
+                    //                    var $cancelButton = dialog.getButton('btnDialogCancel');
+                    //                    $cancelButton.text('Close');
+
+                    //                }
+                    //            };
+
+                    //            xmlhttp.send() // Make sure to stringify
+                    //                    }
+                    //                }, {
+                    //        id: 'btnDialogCancel',
+                    //        label: 'Cancel',
+                    //        action: function (dialogRef) {
+                    //            dialogRef.close();
+                    //            window.location.href = window.location.href; //This is a possibility
+                    //            window.location.reload(); //Another possiblity
+                    //            history.go(0); //And another
+                    //                }
+                    //            }]
+                    //});
+                    //            dialog.open();
+                }
+</script>

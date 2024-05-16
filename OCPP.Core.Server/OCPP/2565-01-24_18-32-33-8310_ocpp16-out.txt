@@ -1,0 +1,1 @@
+[3,"bce832aaae5e44938b14d5fd6f39f6f6",{"idTagInfo":{"expiryDate":"2199-12-31T00:00:00+07:00","status":"Accepted"}}]

@@ -1,0 +1,29 @@
+﻿<!-- LOGO -->
+<div class="topbar-left">
+    <a href="/" class="logo mt-1" style="color:white; font-size:18px;">
+        <i class="fas fa-charging-station fa-1x"></i> EV Charger
+    </a>
+</div>
+
+<nav class="navbar-custom">
+
+    <ul class="navbar-right d-flex list-inline float-right mb-0">
+        @{
+            if (this.User != null && this.User.Identity != null && this.User.Identity.IsAuthenticated)
+            {
+                <!-- User-->
+                <li class="list-inline-item dropdown notification-list">
+                    <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <span class="d-none d-md-inline-block ml-1">@this.User.Identity.Name <i class="mdi mdi-chevron-down"></i> </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown" x-placement="bottom-end" style="position: absolute; transform: translate3d(-31px, 61px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a class="dropdown-item" href="~/Account/Logout"><i class="dripicons-exit text-muted"></i> Logout</a>
+                    </div>
+                </li>
+            }
+        }
+
+
+    </ul>
+
+</nav>

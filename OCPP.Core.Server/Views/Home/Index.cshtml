@@ -1,0 +1,119 @@
+﻿
+@model OverviewViewModel
+<br />
+@if (Model != null)
+{
+<div class="row">
+    @foreach (ChargePointsOverviewViewModel cpvm in Model.ChargePoints)
+    {
+        //ChargePointsOverviewViewModel cpvm = Model.ChargePoints.Where(x => x.ChargePointId == cp.ChargePointId).FirstOrDefault();
+        string chargePointName = string.IsNullOrWhiteSpace(cpvm.Name) ? cpvm.ChargePointId + "(" + cpvm.ConnectorId + ")" : cpvm.Name;
+        string lastCharge = cpvm.CurrentChargeData != null ? cpvm.CurrentChargeData : null;
+        //(cpvm.MeterStart >= 0 && cpvm.MeterStop != null) ? string.Format("{0:0.0##} kWh", (cpvm.MeterStop - cpvm.MeterStart)) : null;
+        string lastSoc = cpvm.Soc >= 0 ? string.Format("{0:0.0##} %", cpvm.Soc) : null;
+        string lastCurrentChargeKW = cpvm.CurrentChargeKW >= 0 ? string.Format("{0:0.0##} KW", cpvm.CurrentChargeKW) : null;
+
+        //bool connectorOnline = cpvm.ConnectorStatus != ConnectorStatusEnum.Undefined ? true : false;
+
+        string chargeTime = null;
+        if (cpvm.StartTime != null && cpvm.StopTime == null)
+        {
+            TimeSpan timeSpan = DateTime.Now.Subtract(cpvm.StartTime.Value);
+            chargeTime = string.Format("{0}h {1}m", (timeSpan.Days * 24 + timeSpan.Hours), timeSpan.Minutes);
+        }
+
+        string cpIcon = "fas fa-plug";
+        string cpColor = "successColor";
+        string cpTextColor = "successTextColor";
+        string cpTitle = "Available";
+        switch (cpvm.ConnectorStatus)
+        {
+            case ConnectorStatusEnum.Charging:
+                cpIcon = "fas fa-bolt"; //"fa-car";
+                cpColor = "errorColor";
+                cpTextColor = "errorTextColor";
+                cpTitle = "Charging";
+                break;
+            case ConnectorStatusEnum.Reserved:
+                cpIcon = "fas fa-file-signature"; //"fa-car";
+                cpColor = "preparingColor";
+                cpTextColor = "preparingTextColor";
+                cpTitle = "Reserved";
+                break;
+            case ConnectorStatusEnum.Finishing:
+                cpIcon = "fas fa-car"; //"fa-car";
+                cpColor = "successColor";
+                cpTextColor = "successTextColor";
+                cpTitle = "Finishing";
+                break;
+            case ConnectorStatusEnum.Preparing:
+                cpIcon = "fas fa-plug"; //"fa-car";
+                cpColor = "preparingColor";
+                cpTextColor = "preparingTextColor";
+                cpTitle = "Preparing";
+                break;
+            case ConnectorStatusEnum.Occupied:
+                cpIcon = "fas fa-bolt"; //"fa-car";
+                cpColor = "errorColor";
+                cpTextColor = "errorTextColor";
+                cpTitle = "Charging";
+                break;
+            case ConnectorStatusEnum.Faulted:
+                cpIcon = "fas fa-times-circle";
+                cpColor = "errorColor";
+                cpTextColor = "errorTextColor";
+                cpTitle = "Faulted";
+                break;
+            case ConnectorStatusEnum.Unavailable:
+                cpIcon = "fas fa-ban";
+                cpColor = "unavailableColor";
+                cpTextColor = "errorTextColor";
+                cpTitle = "Unavailable";
+                break;
+            case ConnectorStatusEnum.Undefined:
+                cpIcon = "fas fa-circle-notch";
+                cpColor = "unavailableColor";
+                cpTextColor = "errorTextColor";
+                cpTitle = "Idle";
+                break;
+        }
+    <div class="col-md-4 col-xl-3">
+        <div class="card">
+            <a href="~/Home/ChargePointDataDetail/@Uri.EscapeDataString(cpvm.ChargePointId)/@(cpvm.ConnectorId)" class="text-decoration-none">
+                <div class="card-header @cpColor headerCardColor">
+                    <i class="@cpIcon fa-2x"></i> @chargePointName
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title @cpTextColor">@cpTitle</h5>
+                    <p class="card-text">Time: @chargeTime</p>
+                    <p class="card-text">Meter: @lastCharge</p>
+                    <p class="card-text">ChargeKW: @lastCurrentChargeKW</p>
+                    <p class="card-text">Soc: @lastSoc</p>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between">
+                    @if (Model.ServerConnection)
+                    {
+                        @if (cpvm.Heartbeat)
+                        {
+                            <div><i class="fa fa-circle" style="color:green" aria-hidden="true" title="Heartbeat On"></i></div> }
+                        else
+                        {
+                            <div><i class="fa fa-circle" style="color:red" aria-hidden="true" title="Heartbeat Lost"></i></div>}
+                            <div>@cpvm.CurrentChargeData</div>
+                            @if (cpvm.Online)
+                            {
+                                <div><i class="fas fa-link" title="Charge station is online"></i></div> }
+                            else
+                            {
+                                <div><i class="fas fa-unlink" title="Charge station is offline"></i></div>}}
+                </div>
+            </a>
+        </div>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+        {
+            <br />
+            <div class="alert alert-danger" role="alert">
+            @ViewBag.ErrorMsg
+        </div>}
+    </div>}
+</div>}

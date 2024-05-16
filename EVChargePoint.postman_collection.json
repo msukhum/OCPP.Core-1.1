@@ -1,0 +1,835 @@
+{
+	"info": {
+		"_postman_id": "2355c9ca-6d82-4681-9fd1-88516a5c20a9",
+		"name": "EVChargePoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetChargePointList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/APIDATA/GetChargePointList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"APIDATA",
+						"GetChargePointList"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetChargePointList",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetChargePointList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetChargePointList"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetChargePointList/ChargePointID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetChargePointList/Test1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetChargePointList",
+								"Test1234"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetChargeTagtList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/APIDATA/GetChargeTagtList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"APIDATA",
+						"GetChargeTagtList"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetChargeTagtList",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetChargeTagtList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetChargeTagtList"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetChargeTagtList/ChargeTagID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetChargeTagtList/B4A63CDF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetChargeTagtList",
+								"B4A63CDF"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetConnectorStatusList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/APIDATA/GetConnectorStatusList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"APIDATA",
+						"GetConnectorStatusList"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetConnectorStatusList",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetConnectorStatusList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetConnectorStatusList"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetConnectorStatusList",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetConnectorStatusList/Test1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetConnectorStatusList",
+								"Test1234"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetConnectorStatusList/GetConnectorStatusList/ConnectorID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetConnectorStatusList/Test1234/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetConnectorStatusList",
+								"Test1234",
+								"1"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetTransactionsList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/APIDATA/GetTransactionsList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"APIDATA",
+						"GetTransactionsList"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetTransactionsList",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetTransactionsList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetTransactionsList"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetTransactionsList/ChargePointID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetTransactionsList/Test1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetTransactionsList",
+								"Test1234"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "GetTransactionsList/ChargePointID/ChargeTagID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/APIDATA/GetTransactionsList/Test1234/B4A63CDF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"APIDATA",
+								"GetTransactionsList",
+								"Test1234",
+								"B4A63CDF"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "ReserveNow",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/ReserveNow/Test1234/1/B4A63CDF",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"ReserveNow",
+						"Test1234",
+						"1",
+						"B4A63CDF"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ReserveNow/ChargePointID/ConnectorID/ChargeTagID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/ReserveNow/Test1234/1/B4A63CDF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"ReserveNow",
+								"Test1234",
+								"1",
+								"B4A63CDF"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "CancelReservation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/CancelReservation/Test1234/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"CancelReservation",
+						"Test1234",
+						"1",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CancelReservation/ChargePointID/ConnectorID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/CancelReservation/Test1234/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"CancelReservation",
+								"Test1234",
+								"1",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "RemoteStartTransaction",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/RemoteStartTransaction/Test1234/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"RemoteStartTransaction",
+						"Test1234",
+						"1",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RemoteStartTransaction/ChargePointID/ConnectorID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/RemoteStartTransaction/Test1234/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"RemoteStartTransaction",
+								"Test1234",
+								"1",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "RemoteStopTransaction",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/RemoteStopTransaction/Test1234/1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"RemoteStopTransaction",
+						"Test1234",
+						"1",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "RemoteStopTransaction/ChargePointID/ConnectorID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/RemoteStopTransaction/Test1234/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"RemoteStopTransaction",
+								"Test1234",
+								"1",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "UnlockConnector",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/UnlockConnector/Test1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"UnlockConnector",
+						"Test1234"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UnlockConnector/ChargePointID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/UnlockConnector/Test1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"UnlockConnector",
+								"Test1234"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Reset",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/Reset/Test1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"Reset",
+						"Test1234"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Reset/ChargePointID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/Reset/Test1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"Reset",
+								"Test1234"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/API/Status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"API",
+						"Status"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Status",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "36029A5F-B736-4DA9-AE46-D66847C9062C",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/API/Status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"API",
+								"Status"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

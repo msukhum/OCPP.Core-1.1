@@ -1,0 +1,1 @@
+[2,"jbD9rhMoOs7C5xmVBSi9CGeRinv9jvNEvIrJ","StatusNotification",{"connectorId":"2","status":"Reserved","errorCode":"NoError","info":"","timestamp":"2022-02-01T06:31:01Z","vendorId":"","vendorErrorCode":""}]

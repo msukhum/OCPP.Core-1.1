@@ -1,0 +1,170 @@
+﻿@using OCPP.Core.Database
+@using OCPP.Core.Server.Messages_OCPP16
+@model OCPPViewModel
+
+@{ ViewData["Title"] = "Management"; }
+<br />
+
+<style>
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .successTextColor {
+        color: seagreen;
+    }
+
+    .errorTextColor {
+        color: orangered;
+    }
+
+    .font-weight-bold {
+        color: #5c6268 !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+    }
+
+    .btn-font-weight-bold {
+        font-weight: 700 !important;
+    }
+
+    .disabled {
+        color: #b8babd !important;
+    }
+
+    .row {
+        justify-content: center;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <h4 class="page-title mb-0">GetConfiguration</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end row -->
+<div class="row align-items-center">
+    <div class="col-md-10 card border-1 shadow-none rounded">
+        <div class="card-header">JSON TEST</div>
+        <div class="card-body">
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-6">
+                    <p>
+                        <strong>Charge point</strong> :
+                        <select id="chargepoint_sl" class="form-control">
+                            @foreach (ChargePoint cp in Model.ChargePoints.OrderBy(x => x.ChargePointId).ToList())
+                            {
+                <option value="@cp.ChargePointId">@(string.IsNullOrEmpty(cp.Name) ? cp.ChargePointId : cp.Name)</option>}
+                        </select>
+                    </p>
+                    <p>
+                        <strong>Key</strong> :
+                        <select id="textkey" multiple size="10" class="form-control">
+                            <option value="AllowOfflineTxForUnknownId">AllowOfflineTxForUnknownId (boolean)</option>
+                            <option value="AuthorizationCacheEnabled">AuthorizationCacheEnabled (boolean)</option>
+                            <option value="AuthorizeRemoteTxRequests">AuthorizeRemoteTxRequests (boolean)</option>
+                            <option value="BlinkRepeat">BlinkRepeat (in times)</option>
+                            <option value="ChargeProfileMaxStackLevel">ChargeProfileMaxStackLevel (integer)</option>
+                            <option value="ChargingScheduleAllowedChargingRateUnit">ChargingScheduleAllowedChargingRateUnit (comma separated list)</option>
+                            <option value="ChargingScheduleMaxPeriods">ChargingScheduleMaxPeriods (integer)</option>
+                            <option value="ClockAlignedDataInterval">ClockAlignedDataInterval (in seconds)</option>
+                            <option value="ConnectionTimeOut">ConnectionTimeOut (in seconds)</option>
+                            <option value="ConnectorPhaseRotation">ConnectorPhaseRotation (comma separated list)</option>
+                            <option value="ConnectorPhaseRotationMaxLength">ConnectorPhaseRotationMaxLength (integer)</option>
+                            <option value="ConnectorSwitch3to1PhaseSupported">ConnectorSwitch3to1PhaseSupported (boolean)</option>
+                            <option value="GetConfigurationMaxKeys">GetConfigurationMaxKeys (integer)</option>
+                            <option value="HeartbeatInterval">HeartbeatInterval (in seconds)</option>
+                            <option value="LightIntensity">LightIntensity (in %)</option>
+                            <option value="LocalAuthListEnabled">LocalAuthListEnabled (boolean)</option>
+                            <option value="LocalAuthListMaxLength">LocalAuthListMaxLength (integer)</option>
+                            <option value="LocalAuthorizeOffline">LocalAuthorizeOffline (boolean)</option>
+                            <option value="LocalPreAuthorize">LocalPreAuthorize (boolean)</option>
+                            <option value="MaxChargingProfilesInstalled">MaxChargingProfilesInstalled (integer)</option>
+                            <option value="MaxEnergyOnInvalidId">MaxEnergyOnInvalidId (in Wh)</option>
+                            <option value="MeterValueSampleInterval">MeterValueSampleInterval (in seconds)</option>
+                            <option value="MeterValuesAlignedData">MeterValuesAlignedData (comma separated list)</option>
+                            <option value="MeterValuesAlignedDataMaxLength">MeterValuesAlignedDataMaxLength (integer)</option>
+                            <option value="MeterValuesSampledData">MeterValuesSampledData (comma separated list)</option>
+                            <option value="MeterValuesSampledDataMaxLength">MeterValuesSampledDataMaxLength (integer)</option>
+                            <option value="MinimumStatusDuration">MinimumStatusDuration (in seconds)</option>
+                            <option value="NumberOfConnectors">NumberOfConnectors (integer)</option>
+                            <option value="ReserveConnectorZeroSupported">ReserveConnectorZeroSupported (boolean)</option>
+                            <option value="ResetRetries">ResetRetries (in times)</option>
+                            <option value="SendLocalListMaxLength">SendLocalListMaxLength (integer)</option>
+                            <option value="StopTransactionOnEVSideDisconnect">StopTransactionOnEVSideDisconnect (boolean)</option>
+                            <option value="StopTransactionOnInvalidId">StopTransactionOnInvalidId (boolean)</option>
+                            <option value="StopTxnAlignedData">StopTxnAlignedData (comma separated list)</option>
+                            <option value="StopTxnAlignedDataMaxLength">StopTxnAlignedDataMaxLength (integer)</option>
+                            <option value="StopTxnSampledData">StopTxnSampledData (comma separated list)</option>
+                            <option value="StopTxnSampledDataMaxLength">StopTxnSampledDataMaxLength (integer)</option>
+                            <option value="SupportedFeatureProfiles">SupportedFeatureProfiles (comma separated list)</option>
+                            <option value="SupportedFeatureProfilesMaxLength">SupportedFeatureProfilesMaxLength (integer)</option>
+                            <option value="SupportedFileTransferProtocols">SupportedFileTransferProtocols (comma separated list)</option>
+                            <option value="TransactionMessageAttempts">TransactionMessageAttempts (in times)</option>
+                            <option value="TransactionMessageRetryInterval">TransactionMessageRetryInterval (in seconds)</option>
+                            <option value="UnlockConnectorOnEVSideDisconnect">UnlockConnectorOnEVSideDisconnect (boolean)</option>
+                            <option value="WebSocketPingInterval">WebSocketPingInterval (in seconds)</option>
+                        </select>
+                    </p>
+                    <p style="float: right;">
+                        <button id="genbn" type="button" class="btn btn-dark">Gen Json</button>
+                        <button id="testbn" type="button" class="btn btn-primary">Test</button>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p>
+                        <strong>Request</strong> :
+                        <textarea id="txtRequest" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+            <div class="row align-items-center" style="justify-content: flex-start;">
+                <div class="col-12">
+                    <p>
+                        <strong>Result</strong> :
+                        <textarea id="txtResult" class="form-control" maxlength="225" rows="10"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#genbn').click(function () {
+        var key = $('#textkey option:selected').toArray().map(item => item.value);
+        console.log(key);
+        $.ajax({
+            url: "@Url.Action("GetConfigurationJson", "OCPP")",
+            type: "POST",
+            data: { key: key},
+            success: function (response) {
+                var url = "ChargePoint: " + $('#chargepoint_sl').val() + "," + '\nGetConfigurationRequest :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtRequest').val(pretty);
+            }
+        });
+    });
+
+    $('#testbn').click(function () {
+        var id = $('#chargepoint_sl').val();
+        var key = $('#textkey option:selected').toArray().map(item => item.value);
+        $.ajax({
+            url: "@Url.Action("GetConfiguration2ChargePoint", "OCPP")",
+            type: "POST",
+            data: { id: id, key: key },
+            success: function (response) {
+                var url = 'GetConfigurationResponse :\n';
+                var obj = JSON.parse(response);
+                var pretty = url + JSON.stringify(obj, undefined, 4);
+                $('#txtResult').val(pretty);
+            }
+        });
+    });
+</script>

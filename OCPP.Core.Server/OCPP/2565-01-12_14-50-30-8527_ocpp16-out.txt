@@ -1,0 +1,1 @@
+[2,"e04ce527014149059d2346001b44444a","ReserveNow",{"connectorId":1,"expiryDate":"2022-01-12T08:05:30.8397439+00:00","idTag":"B4A63CDF","reservationId":5}]
